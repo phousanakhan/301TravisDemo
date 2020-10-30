@@ -1,7 +1,6 @@
 language: android
 jdk: oraclejdk8
 dist: trusty
-
 env:
   global:
     - ANDROID_API_LEVEL=30
@@ -9,7 +8,6 @@ env:
     - ANDROID_EMU_API_LEVEL=22
     - ANDROID_ABI=armeabi-v7a
     - QEMU_AUDIO_DRV=none
-
 android:
   components:
     #Android SDK Tools
@@ -31,19 +29,21 @@ android:
     
     #Building the emulator
     - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
-
   licenses:
       - 'android-sdk-preview-license-52d11cd2'
       - 'android-sdk-license-.+'
       - 'google-gdk-license-.+'
-
 before_install:
   - yes | sdkmanager "platforms;android-$ANDROID_EMU_API_LEVEL"
   - yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL"
-
 before_script:
   - chmod +x gradlew
   - echo no | android create avd --force -n test -t android-$ANDROID_EMU_API_LEVEL --abi google_apis/$ANDROID_ABI
   - emulator -avd test -no-window &
+  - android-await-form-emulator
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+
+#script:
+#  - ./gradlew clean build
+#  - ./gradlew test
