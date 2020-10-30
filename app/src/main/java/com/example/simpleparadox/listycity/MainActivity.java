@@ -3,6 +3,8 @@ package com.example.simpleparadox.listycity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -41,13 +43,23 @@ public class MainActivity extends AppCompatActivity {
 
         cityList.setAdapter(cityAdapter);
 
+        cityList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                cityDataList.remove(i);
+                cityAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+
+
 //        dataList = new ArrayList<>();
 //        dataList.addAll(Arrays.asList(cities));
 //
 //        cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList);
 //
 //        cityList.setAdapter(cityAdapter);
-
 
 
     }
