@@ -83,8 +83,7 @@ public class CityList {
      * @return boolean
      */
     public boolean isEmpty(){
-        //return cities.isEmpty();
-        return true;
+        return cities.isEmpty();
     }
 
 }
